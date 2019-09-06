@@ -21,7 +21,7 @@
   * Kinesis producer Library (KPL)
   * Kinesis client Library (KCL)
   * Kinsesis Agent (To send and collect data)
-  * Kinesis Rest API ![](/Users/rdiaz/Development/aws_big_data_specialty/media/kinesis_overview.png)
+  * Kinesis Rest API ![](./media/kinesis_overview.png)
 
 ## Kinesis Core Concepts
 
@@ -149,7 +149,7 @@
 
   * Emit data to DynamoDb, ElasticSearch, RedShift and S3
 
-    ![](/Users/rdiaz/Development/aws_big_data_specialty/media/kinesis_connector_library.png)
+    ![](./media/kinesis_connector_library.png)
 
   
 
