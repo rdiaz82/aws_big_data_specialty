@@ -155,3 +155,87 @@
 
 ## Amazon Kinesis Firehose
 
+* Collects and loads streaming data near in real-time
+
+* Load data into S3, Redshift and ElascticSearch
+
+* Use existing Business Intelligence applications and dashboards to visualizate the data
+
+* Highly available and durable
+
+* Fully managed:
+
+  * Scalability, sharding and monitoring with zero administration
+  * minimaze storage
+  * secure
+
+* It can be managed with console or API
+
+* For a Kinesis Firehose you have a BufferSize(1Mb-128MB)/BufferInterval(60-900sec) and the first condition satisfied will move data into the desired service (S3, Redshift or ElasticSearch)
+
+  ![](./media/kinesis_firehose.png)
+
+* In order to load data into Kinesis Firehose there are several methods:
+
+  * Kinesis Agent
+    * Send Data to Firehose Delivery Stream
+    * CloudWatch metrics
+    * Preprocess Data
+      - Multi line record to single line record
+      - convert to Json
+      - convert from log format into Json
+  * AWS SDK
+    * Java, .Net, Node.js, Python or Ruby
+    * PutRecord - single record
+    * PutRecordBatch - multiple records
+
+* Kinesis Firehose allows to Invoke a Lambda function to transform data
+
+* Data transformation flow
+
+  * Buffer incoming data up to 3MB
+  * Firehose invoke lambda function to transform data
+  * Lambda returns transformed data
+  * Transformed data is deliverid to destination service
+
+* Parameters for transformation
+
+  * recordId - The transformed record must have the same recordId prior transformation
+  * Result could be one of these:
+    * Ok
+    * Dropped: Intentional ignored by lambda logic
+    * ProcessingFailed: failed to process
+  * Data: Base 64 encoded transformed record data
+
+* There are several lambdas blueprints for firehose transformations [Aws developer blog about firehose transformations using AWS lambda](https://aws.amazon.com/blogs/compute/amazon-kinesis-firehose-data-transformation-with-aws-lambda/)
+
+* Failure handling
+
+  * 3 tries default
+  * invocation erros can be logged using cloudwatch
+  * Unsuccessfully process records are sent directly to S3 bucket in the processing_failed folder
+
+* Data Delivery
+
+  * S3
+    * Depends on buffer size and buffer interval
+    * Firehouse can raise the buffer size dynamically
+  * RedShift
+    * How fast can the Redshift cluster finish the Copy command
+    * Firehose issues new Copy command automatically
+  * ElasticSearch
+    * Depends on buffer size and buffer interval
+    * Firehouse can raise the buffer size dinamically
+
+* Failures
+
+  * S3 - Retries delivery fo up to 24h
+  * Redshift
+    * Retry duration configurable between 0 and 7200sec from S3
+    * Skip S3 objects
+    * Manifest the manual backfill
+  * ElasticSearch
+    * Configurable retry duration 0-7200
+    * Skip index request
+    * Skipped documents sent to S3 in Json format
+    * manual backfill
