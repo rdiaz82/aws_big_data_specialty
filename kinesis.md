@@ -239,3 +239,129 @@
     * Skip index request
     * Skipped documents sent to S3 in Json format
     * manual backfill
+
+## SQS
+
+* Simple Queue service
+* Reliable
+* Scalable
+* Hosted Queues
+* Sending data between service
+* Storing data
+* Retrieving data 
+* Used like a buffer 
+* Sqs support up to 256kb for message
+* Any application can storage into SQS
+* Any component can retrieve data from SQS
+* for data payload bigger than 256kb the SQS extended client library allows to save bigger data using S3
+* The messages are delivered at leat once
+* It support multiple reading and writters
+* FIFO queues are supported
+* A queue can be created in any region
+* Messages can be retained for up to 14 days
+* messages can be sent read simultaneously
+* Long polling reduces extraneous polling, 
+* For the exam is important to know the different between SQS and kinesis. SQS is a queu service that allows you to move data between services and communicate different systems otherwise, kinesis enable real time processing of big data. 
+* SQS Uses cases:
+  * Order processing: with two queues for request and response
+  * High priority system requests with two different queues
+  * Fanout application: Image processing multiple lambdas fired at the same time performing different tasks like thumbnail, image recognition and metadata processing. 
+* Kinesis Uses cases:
+  * Fast log and data feed intake and processing 
+  * Real time metrics and reporting 
+  * Real time data analytics
+  * Complex stream processing
+
+## IoT
+
+* Managed cloud platform that allows to connect  devices
+
+  ![](./media/iot_overview.png)
+
+* All IoT devices can create a big quantity of data in real time
+
+* this service is all managed so you don't need to worry about the capacity.
+
+* IoT can inject data into:
+
+  * Elastic search
+  * Kinesis Firehose
+  * Kinesis Stream
+  * DynamoDb table
+  * Machine learning service 
+  * Cloudwatch
+  * S3
+  * SqS
+  * SNS
+  * Lambda
+
+* AWS provides a IoT framework for devices to communicate with the cloud in a secure way
+
+* Each device has an unique certificate to publish data into the cloud
+
+  * the certificate is a X.509
+  * AWS IoT uses IAM policies for uses groups and roles
+  * Amazon cognito can be used for mobile applications
+
+* Cognito Identity
+
+  ![](./media/iot_authentication.png)
+
+  * Allow you to use your own identity provider
+  * Login with amazon, google, facebook, twitter
+  * OpenID providers, SAML Identity providers
+  * Cognito identity User Pool can scale to millions of users
+
+* Authorization
+
+  * AWS IoT policies and IAM policies to control operations and identity can perform
+  * AWS IoT operations
+    * Control Plane API for administrative task, create devices, certificates etc...
+    * Data Plane API for sending and reciving data from AWS IoT
+
+* Device gateway (message broker)
+
+  * Maintains sessions and subscriptions for all connected devices
+  * Allows secure one to one and one to many communications
+  * Protocols
+    * MQTT
+    * Websocket
+    * HTTP
+  * Scales automatically
+
+* Device Registry
+
+  * What is a thing? it is a pyshical device that can generate or consume data
+  * the device registry is in charge to control the devices in the network
+
+* Device shadow
+
+  * Json document to store and retrieve the current state of a thing
+  * device shadow maintained for each thing connected to the AWS IoT
+  * Acts as a message channel to send commands to a thing
+
+* Rules engine
+
+  * Provide a thing the ability to interacti with the AWS IoT service and other services
+  * Rules enables you to transform messages and route them to varios AWS services
+  * Messager are transformed using SQL based syntax
+  * Based on the rule, a rule action is triggered and that rule action kicks off the delivery of message to other AWS services. 
+
+* for the exam authentication and authorization
+
+  * Pay special attention to how Cognito works with AWS IoT
+
+  * Device gateway, device registry and device shadow
+
+  * know what the rule engine does
+
+  * Know what a rule action does
+
+  * rule actions works in combination with lambda, dynamodb kinesis stream , kinesis firehose and machine learning.
+
+    
+
+  
+
+
+
