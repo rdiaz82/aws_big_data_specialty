@@ -350,18 +350,130 @@
 * for the exam authentication and authorization
 
   * Pay special attention to how Cognito works with AWS IoT
-
   * Device gateway, device registry and device shadow
-
   * know what the rule engine does
-
   * Know what a rule action does
-
   * rule actions works in combination with lambda, dynamodb kinesis stream , kinesis firehose and machine learning.
 
-    
+## Data Pipeline
 
+* Web service that help you process and move data between AWS compute and storage services and on-premises data sources
+
+* Create an ETL (extract - transform - load) workflow to automate processing and movement data at scheduled intervals, then terminate the resource. 
+
+* Copy data between regions from dynamoDB in one region to dynamoDb in other region
+
+* ![](./media/datapipeline_dynamo.png)
+
+* The pipelines is a name of the container that contains:
+
+  * Data nodes
+  * Activities
+  * Preconditions
+  * Schedules
+  * All of this works together to move data from one point to another
+  * Data pipeline runs on EC2 instances or EMR which are provisioned automatically
+
+* It can run on-premise
+
+  * Install a Task tunner package on your premise host
+  * The package continuously polls the Data Pipeline for work to perform
+  * When it's time to run a particular activity on your on-premise resource, for example, executing a DB stored procesudre or a database dump, AWS data pipeline will issue the appropriate command to the Task Runner.
+
+* Data node
+
+  * End destination for your data
+
+    * DynamoDb
+    * RedShift
+    * S3
+
+  * Activity
+
+    * Action that data pipeline will execute
+    * Copy
+    * EMR activity
+    * ShellCommand activity for custom one
+
+  * Precondition
+
+    * Rediness check that can be optionally associated with a data source or activity
+    * If a data source has a precondition check, that check must complete sucessfully before any activity consuming the data are launched. 
+    * if an activity has a precondition, then the precondition check must complete successfully before the activity is run.
+    * You can have custom preconditions
+    * Precondition
+      * DynamoDBDataExist
+      * DynamoDBTableExist
+      * S3KeyExists - path exists in S3
+      * S3PrefixExists - file exists in S3
+      * ShellCommandPreconditions - custom
+
+  * Schedules
+
+    * Define when the pipeline runs.
+
+    * Frequency to check the data is available.
+
+      
+
+  ## Getting data into AWS
+
+  * Direct Connect
+
+    * Link connect an internal network with AWS
   
+  * look for use cases
+  
+    ![](./media/direct_connect.png)
+  
+* Snowball
+  
+  * it allows to migrate terabytes of data into AWS
+  
+  * Snowball Edge
+  
+    * Storage optimized option Block and S3 compatible 24 vCPU
+  * Compute optimised Block and S3 compatible 52 vCPU, GPU
+    * Data collection ML processing and storage where connectivity is not steady
+  * Ship back to AWS and migrate the data to AWS
+  
+* Snowball mobile
+  
+  * A truck
+  
+  * Storage gateway
+  
+    * Allows on-premise application to use cloud storage
+    * Backup/archiving, DR storage and migration
+  * Application connect through a virtual machine or hardware gateway appliance
+    * S3, Glacier, EBS and AWS backup
+  * Optmized data transfer mechanism, bandwidth management efficient data transfer (includes local cache for low-latency for your most active data on AWS)
+  
+  * S3 transfer acceleration
+  
+    * Uploading to a centralized bucket from various parts of the world
+  * Transferring GBs - TBs of data accross continents
+    * Transfer acceleration uses CloudFront
+  * Data routed from edge location to S3 over an optimised network path
+  
+  * Database migration service
+  
+    * Source database remain operation downtime
+    * DMS support the most common comercial databases
+    * Homogeneous and Heterogeneous migration
+  * One-time migration or continious replication
+    * Combination of snowball and DMS (>5 TB)
+  * Depends on use case
+  
+    https://aws.amazon.com/blogs/aws/amazon-quicksight-update-geospatial-visualization-private-vpc-access-and-more/
+  
+  * https://aws.amazon.com/blogs/architecture/store-protect-optimize-your-healthcare-data-with-aws/
+
+
+
+
+
+
 
 
 
