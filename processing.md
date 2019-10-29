@@ -51,7 +51,9 @@
 
 * Hadoop Architecture
 
-  * Diagrams here!!
+![](./media/distribute_processing.png)
+![](./media/haddop_file_system.png)
+![](./media/hadoop.png)
 
 * MapReduce Job Tasks
 
